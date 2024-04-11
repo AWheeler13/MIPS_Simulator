@@ -1,3 +1,4 @@
+
 #include "spimcore.h"
 
 // sets res to an unsigned value equivalent to n bits starting at and including bit s, s = 0 is lsb of val
@@ -60,119 +61,127 @@ int instruction_decode(unsigned op, struct_controls *controls)
     {
     // r-type
     case 0:
-        (controls->RegWrite) = 1;
-        (controls->RegDst) = 1;
-        (controls->ALUSrc) = 0;
-        (controls->ALUOp) = 7;
-        (controls->MemWrite) = 0;
-        (controls->MemRead) = 0;
-        (controls->MemtoReg) = 0;
-        (controls->Jump) = 0;
+        (*controls).RegWrite = 1;
+        (*controls).RegDst = 1;
+        (*controls).ALUSrc = 0;
+        (*controls).ALUOp = 7;
+        (*controls).MemWrite = 0;
+        (*controls).MemRead = 0;
+        (*controls).MemtoReg = 0;
+        (*controls).Jump = 0;
+        (*controls).Branch = 0;
         break;
     // j type
     case 2: // jump
-        (controls->RegWrite) = 0;
-        (controls->RegDst) = 0;
-        (controls->ALUSrc) = 1;
-        (controls->ALUOp) = 0;
-        (controls->MemWrite) = 0;
-        (controls->MemRead) = 1;
-        (controls->MemtoReg) = 0;
-        (controls->Jump) = 1;
-        (controls->Branch) = 0;
+        (*controls).RegWrite = 0;
+        (*controls).RegDst = 0;
+        (*controls).ALUSrc = 1;
+        (*controls).ALUOp = 0;
+        (*controls).MemWrite = 0;
+        (*controls).MemRead = 1;
+        (*controls).MemtoReg = 0;
+        (*controls).Jump = 1;
+        (*controls).Branch = 0;
         break;
     // i types
     case 4: // BEQ
-        (controls->RegWrite) = 0;
-        (controls->RegDst) = 2;
-        (controls->ALUSrc) = 0;
-        (controls->ALUOp) = 1;
-        (controls->MemWrite) = 0;
-        (controls->MemRead) = 0;
-        (controls->MemtoReg) = 2;
-        (controls->Jump) = 0;
-        (controls->Branch) = 1;
+        (*controls).RegWrite = 0;
+        (*controls).RegDst = 2;
+        (*controls).ALUSrc = 0;
+        (*controls).ALUOp = 1;
+        (*controls).MemWrite = 0;
+        (*controls).MemRead = 0;
+        (*controls).MemtoReg = 2;
+        (*controls).Jump = 0;
+        (*controls).Branch = 1;
         break;
     case 8: // addi
-        (controls->RegWrite) = 1;
-        (controls->RegDst) = 0;
-        (controls->ALUSrc) = 1;
-        (controls->ALUOp) = 0;
-        (controls->MemWrite) = 0;
-        (controls->MemRead) = 0;
-        (controls->MemtoReg) = 0;
-        (controls->Jump) = 0;
-        (controls->Branch) = 0;
+        (*controls).RegWrite = 1;
+        (*controls).RegDst = 0;
+        (*controls).ALUSrc = 1;
+        (*controls).ALUOp = 0;
+        (*controls).MemWrite = 0;
+        (*controls).MemRead = 0;
+        (*controls).MemtoReg = 0;
+        (*controls).Jump = 0;
+        (*controls).Branch = 0;
         break;
     case 10: // slti
-        (controls->RegWrite) = 1;
-        (controls->RegDst) = 0;
-        (controls->ALUSrc) = 1;
-        (controls->ALUOp) = 2;
-        (controls->MemWrite) = 0;
-        (controls->MemRead) = 0;
-        (controls->MemtoReg) = 0;
-        (controls->Jump) = 0;
-        (controls->Branch) = 0;
+        (*controls).RegWrite = 1;
+        (*controls).RegDst = 0;
+        (*controls).ALUSrc = 1;
+        (*controls).ALUOp = 2;
+        (*controls).MemWrite = 0;
+        (*controls).MemRead = 0;
+        (*controls).MemtoReg = 0;
+        (*controls).Jump = 0;
+        (*controls).Branch = 0;
         break;
     case 11: // sltiu
-        (controls->RegWrite) = 1;
-        (controls->RegDst) = 0;
-        (controls->ALUSrc) = 1;
-        (controls->ALUOp) = 3;
-        (controls->MemWrite) = 0;
-        (controls->MemRead) = 0;
-        (controls->MemtoReg) = 0;
-        (controls->Jump) = 0;
-        (controls->Branch) = 0;
+        (*controls).RegWrite = 1;
+        (*controls).RegDst = 0;
+        (*controls).ALUSrc = 1;
+        (*controls).ALUOp = 3;
+        (*controls).MemWrite = 0;
+        (*controls).MemRead = 0;
+        (*controls).MemtoReg = 0;
+        (*controls).Jump = 0;
+        (*controls).Branch = 0;
         break;
     case 15: // lui
-        (controls->RegWrite) = 1;
-        (controls->RegDst) = 0;
-        (controls->ALUSrc) = 1;
-        (controls->ALUOp) = 0;
-        (controls->MemWrite) = 0;
-        (controls->MemRead) = 0;
-        (controls->MemtoReg) = 1;
-        (controls->Jump) = 0;
-        (controls->Branch) = 0;
+        (*controls).RegWrite = 1;
+        (*controls).RegDst = 0;
+        (*controls).ALUSrc = 1;
+        (*controls).ALUOp = 0;
+        (*controls).MemWrite = 0;
+        (*controls).MemRead = 0;
+        (*controls).MemtoReg = 1;
+        (*controls).Jump = 0;
+        (*controls).Branch = 0;
         break;
     case 34: // load word
-        (controls->RegWrite) = 1;
-        (controls->RegDst) = 0;
-        (controls->ALUSrc) = 1;
-        (controls->ALUOp) = 0;
-        (controls->MemWrite) = 0;
-        (controls->MemRead) = 1;
-        (controls->MemtoReg) = 2;
-        (controls->Jump) = 0;
-        (controls->Branch) = 0;
+        (*controls).RegWrite = 1;
+        (*controls).RegDst = 0;
+        (*controls).ALUSrc = 1;
+        (*controls).ALUOp = 0;
+        (*controls).MemWrite = 0;
+        (*controls).MemRead = 1;
+        (*controls).MemtoReg = 2;
+        (*controls).Jump = 0;
+        (*controls).Branch = 0;
         break;
     case 43: // save word
-        (controls->RegWrite) = 0;
-        (controls->RegDst) = 2;
-        (controls->ALUSrc) = 1;
-        (controls->ALUOp) = 0;
-        (controls->MemWrite) = 1;
-        (controls->MemRead) = 0;
-        (controls->MemtoReg) = 2;
-        (controls->Jump) = 0;
-        (controls->Branch) = 0;
+        (*controls).RegWrite = 0;
+        (*controls).RegDst = 2;
+        (*controls).ALUSrc = 1;
+        (*controls).ALUOp = 0;
+        (*controls).MemWrite = 1;
+        (*controls).MemRead = 0;
+        (*controls).MemtoReg = 2;
+        (*controls).Jump = 0;
+        (*controls).Branch = 0;
         break;
     default:
         return 1;
+    }
+    return 0;
 }
 
 /* Read Register */
 /* 5 Points */
 void read_register(unsigned r1, unsigned r2, unsigned *Reg, unsigned *data1, unsigned *data2)
 {
+    *data1 = Reg[r1];
+    *data2 = Reg[r2];
 }
 
 /* Sign Extend */
 /* 10 Points */
 void sign_extend(unsigned offset, unsigned *extended_value)
 {
+    *extended_value = offset & 0b00000000000000001111111111111111 //extend by 16 bits
+    if(offset & 0b1000000000000000)
+        *extended_value = *extended_value | 0b11111111111111110000000000000000 //offset is neg, add leading 1's to extedned val
 }
 
 /* ALU operations */
