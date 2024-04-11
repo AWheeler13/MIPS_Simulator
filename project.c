@@ -56,61 +56,111 @@ void instruction_partition(unsigned instruction, unsigned *op, unsigned *r1, uns
 /* 15 Points */
 int instruction_decode(unsigned op, struct_controls *controls)
 {
-    // r-type op
-    if (op == 0)
+    switch (op)
     {
-        *(controls->RegWrite) = 1;
-        *(controls->RegDst) = 1;
-        *(controls->ALUSrc) = 0;
-        *(controls->MemWrite) = 0;
-        *(controls->MemRead) = 0;
-        *(controls->MemtoReg) = 0;
-    }
-
-    // j-type op
-    if (op == 2 || op == 3)
-    {
-
-    }
-
-    //i-type ops
-
-    //save word op
-    if (op == 43)
-    {
-        *(controls->RegWrite) = 0;
-        *(controls->RegDst) = 2;
-        *(controls->ALUSrc) = 1;
-        *(controls->ALUOp) = 2;
-        *(controls->MemWrite) = 1;
-        *(controls->MemRead) = 0;
-        *(controls->MemtoReg) = 2;
-    }
-
-    // load word op
-    if (op == 34)
-    {
-        *(controls->RegWrite) = 1;
-        *(controls->RegDst) = 0;
-        *(controls->ALUSrc) = 1;
-        *(controls->ALUOp) = 2;
-        *(controls->MemWrite) = 0;
-        *(controls->MemRead) = 1;
-        *(controls->MemtoReg) = 2;
-    }
-
-    // beq op
-    if (op == 4)
-    {
-        *(controls->RegWrite) = 0;
-        *(controls->RegDst) = 2;
-        *(controls->ALUSrc) = 0;
-        *(controls->ALUOp) = 6;
-        *(controls->MemWrite) = 0;
-        *(controls->MemRead) = 0;
-        *(controls->MemtoReg) = 2;
-    }
-
+    // r-type
+    case 0:
+        (controls->RegWrite) = 1;
+        (controls->RegDst) = 1;
+        (controls->ALUSrc) = 0;
+        (controls->ALUOp) = 7;
+        (controls->MemWrite) = 0;
+        (controls->MemRead) = 0;
+        (controls->MemtoReg) = 0;
+        (controls->Jump) = 0;
+        break;
+    // j type
+    case 2: // jump
+        (controls->RegWrite) = 0;
+        (controls->RegDst) = 0;
+        (controls->ALUSrc) = 1;
+        (controls->ALUOp) = 0;
+        (controls->MemWrite) = 0;
+        (controls->MemRead) = 1;
+        (controls->MemtoReg) = 0;
+        (controls->Jump) = 1;
+        (controls->Branch) = 0;
+        break;
+    // i types
+    case 4: // BEQ
+        (controls->RegWrite) = 0;
+        (controls->RegDst) = 2;
+        (controls->ALUSrc) = 0;
+        (controls->ALUOp) = 1;
+        (controls->MemWrite) = 0;
+        (controls->MemRead) = 0;
+        (controls->MemtoReg) = 2;
+        (controls->Jump) = 0;
+        (controls->Branch) = 1;
+        break;
+    case 8: // addi
+        (controls->RegWrite) = 1;
+        (controls->RegDst) = 0;
+        (controls->ALUSrc) = 1;
+        (controls->ALUOp) = 0;
+        (controls->MemWrite) = 0;
+        (controls->MemRead) = 0;
+        (controls->MemtoReg) = 0;
+        (controls->Jump) = 0;
+        (controls->Branch) = 0;
+        break;
+    case 10: // slti
+        (controls->RegWrite) = 1;
+        (controls->RegDst) = 0;
+        (controls->ALUSrc) = 1;
+        (controls->ALUOp) = 2;
+        (controls->MemWrite) = 0;
+        (controls->MemRead) = 0;
+        (controls->MemtoReg) = 0;
+        (controls->Jump) = 0;
+        (controls->Branch) = 0;
+        break;
+    case 11: // sltiu
+        (controls->RegWrite) = 1;
+        (controls->RegDst) = 0;
+        (controls->ALUSrc) = 1;
+        (controls->ALUOp) = 3;
+        (controls->MemWrite) = 0;
+        (controls->MemRead) = 0;
+        (controls->MemtoReg) = 0;
+        (controls->Jump) = 0;
+        (controls->Branch) = 0;
+        break;
+    case 15: // lui
+        (controls->RegWrite) = 1;
+        (controls->RegDst) = 0;
+        (controls->ALUSrc) = 1;
+        (controls->ALUOp) = 0;
+        (controls->MemWrite) = 0;
+        (controls->MemRead) = 0;
+        (controls->MemtoReg) = 1;
+        (controls->Jump) = 0;
+        (controls->Branch) = 0;
+        break;
+    case 34: // load word
+        (controls->RegWrite) = 1;
+        (controls->RegDst) = 0;
+        (controls->ALUSrc) = 1;
+        (controls->ALUOp) = 0;
+        (controls->MemWrite) = 0;
+        (controls->MemRead) = 1;
+        (controls->MemtoReg) = 2;
+        (controls->Jump) = 0;
+        (controls->Branch) = 0;
+        break;
+    case 43: // save word
+        (controls->RegWrite) = 0;
+        (controls->RegDst) = 2;
+        (controls->ALUSrc) = 1;
+        (controls->ALUOp) = 0;
+        (controls->MemWrite) = 1;
+        (controls->MemRead) = 0;
+        (controls->MemtoReg) = 2;
+        (controls->Jump) = 0;
+        (controls->Branch) = 0;
+        break;
+    default:
+        return 1;
 }
 
 /* Read Register */
